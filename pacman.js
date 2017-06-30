@@ -33,6 +33,7 @@ var clyde = {
   edible:       false
 };
 
+var ghosts = [inky, blinky, pinky, clyde]
 
 
 
