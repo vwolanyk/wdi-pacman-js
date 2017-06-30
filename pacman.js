@@ -8,7 +8,7 @@ var inky = {
   menu_option : '1',
   name:         'Inky',
   colour:       'Red',
-  character:    'Shadow',
+  character:    'Shadowy',
   edible:       false
 };
 var blinky = {
@@ -59,6 +59,8 @@ function displayStats() {
 function displayMenu() {
   console.log('\n\nSelect Option:\n');  // each \n creates a new line
   console.log('(d) Eat Dot');
+  if (powerPellets > 0){
+  console.log('(p) Eat Power-Pellet');}
   console.log('(1) Eat Inky');
   console.log('(2) Eat Blinky');
   console.log('(3) Eat Pnky');
@@ -78,9 +80,20 @@ function eatDot() {
   score += 10;
 }
 
+function eatPowerPellet() {
+  console.log('\nPOWER UP!');
+  score += 50;
+  for (var i = 0; i < ghosts.length; i++){
+    ghosts[i].edible = true;
+  }
+  powerPellets -= 1;
+}
+
 function eatGhost(ghost) {
   if (ghost.edible) {
-    console.log('\nChomp '+ ghost.name + '!!!');
+    console.log('\nChomp '+ ghost.name + '!!! RIP you '+ ghost.character + " ghost.");
+    score += 200;
+    ghost.edible = false;
   } else {
     lives -= 1;
     console.log('\n That '+ghost.colour+ ' ghost ' + ghost.name + ' just killed PACMAAM!!' );
@@ -101,9 +114,29 @@ function processInput(key) {
     case 'q':
       process.exit();
       break;
+    case 'p':
+      if (powerPellets > 0){
+        eatPowerPellet();
+      } else {
+        console.log('\nNO POWER PELLETS LEFT!!!');
+      }
+      break;
     case 'd':
       eatDot();
       break;
+    case '1':
+      eatGhost(ghosts[0]);
+      break;
+    case '2':
+      eatGhost(ghosts[1]);
+      break;
+    case '3':
+      eatGhost(ghosts[2]);
+      break;
+    case '4':
+      eatGhost(ghosts[3]);
+      break;
+
     default:
       console.log('\nInvalid Command!');
   }
