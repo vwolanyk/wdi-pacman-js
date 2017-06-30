@@ -61,10 +61,10 @@ function displayMenu() {
   console.log('(d) Eat Dot');
   if (powerPellets > 0){
   console.log('(p) Eat Power-Pellet');}
-  console.log('(1) Eat Inky');
-  console.log('(2) Eat Blinky');
-  console.log('(3) Eat Pnky');
-  console.log('(4) Eat Clyde');
+
+  for (var i = 0; i < ghosts.length; i++){
+    console.log('('+ (i+1)+') Eat ' + ghosts[i].name + ' '+ edibleGhost(ghosts[i]))
+  }
   console.log('(q) Quit');
 }
 
@@ -102,11 +102,23 @@ function eatGhost(ghost) {
 
 }
 
+// Extra Useful Functions
+
 function checkLives() {
   if (lives === 0) {
     process.exit();
   }
 }
+
+function edibleGhost(ghost){
+  if (ghost.edible){
+     return "(edible)";
+  } else {
+    return "(inedible)"
+  }
+
+}
+
 // Process Player's Input
 function processInput(key) {
   switch(key) {
@@ -124,6 +136,7 @@ function processInput(key) {
     case 'd':
       eatDot();
       break;
+    
     case '1':
       eatGhost(ghosts[0]);
       break;
